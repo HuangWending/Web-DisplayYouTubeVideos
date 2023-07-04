@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube视频</title>
+    <style>
+        #video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<div id="video-container"></div>
+<script>
+    var videoUrls = [
+        "https://www.youtube.com/watch?v=_pcoBxzXRM4&t=8s",
+        "https://www.youtube.com/watch?v=-O5vZ2mT1qs&t=1s",
+        "https://www.youtube.com/watch?v=Qax-p_IKNcU",
+        "https://www.youtube.com/watch?v=h5vOTuhMRzc",
+        "https://www.youtube.com/watch?v=BpNgo7i8w4Y"
+    ];
+    function displayVideos() {
+        var container = document.getElementById("video-container");
+
+        videoUrls.forEach(function(url) {
+            var videoId = extractVideoId(url);
+
+            var iframe = document.createElement("iframe");
+            iframe.width = "560";
+            iframe.height = "315";
+            iframe.src = "https://www.youtube.com/embed/" + videoId;
+            iframe.frameborder = "0";
+            iframe.allowfullscreen = true;
+
+            container.appendChild(iframe);
+        });
+    }
+    function extractVideoId(url) {
+        var videoId = "";
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+
+        var match = url.match(regExp);
+        if (match && match[7].length === 11) {
+            videoId = match[7];
+        }
+
+        return videoId;
+    }
+    window.onload = displayVideos;
+
+</script>
+</body>
+</html>
